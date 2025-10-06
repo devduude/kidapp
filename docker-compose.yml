@@ -18,10 +18,29 @@ services:
     networks:
       - kidapp-network
 
+  db-init:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile.init
+    container_name: kidapp-db-init
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: kidapp
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - kidapp-network
+    restart: "no"
+
   backend:
     build:
       context: .
       dockerfile: ./apps/backend/Dockerfile
+    container_name: kidapp-backend
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
@@ -34,6 +53,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
     networks:
       - kidapp-network
     restart: unless-stopped

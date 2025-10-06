@@ -28,23 +28,13 @@ Start everything with one command:
 ```bash
 npm run docker:up
 # or
-docker compose up -d --build
+docker compose up -d
 ```
 
 This starts:
 - **PostgreSQL** on `http://localhost:5432`
 - **Backend API** on `http://localhost:3000/api/v1/docs`
 - **Frontend** on `http://localhost:4200`
-
-**View logs:**
-```bash
-npm run docker:logs
-```
-
-**Stop services:**
-```bash
-npm run docker:down
-```
 
 ### Option 2: Local Development
 
@@ -58,12 +48,17 @@ npm run docker:down
    npm run dev
    ```
 
-3. **Run backend** (in new terminal):
+3. **Seed database:**
+   ```bash
+   npm run db:setup 
+   ```
+
+4. **Run backend** (in new terminal):
    ```bash
    npm run dev:backend
    ```
 
-4. **Run frontend** (in new terminal):
+5. **Run frontend** (in new terminal):
    ```bash
    npm run dev:frontend
    ```
